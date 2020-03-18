@@ -14,6 +14,7 @@
 #include "Fork.h"
 #include "Table.h"
 
+#define NUMBER_OF_PHILOSOPHERS 4
 #define THINKING_TIME 500
 #define EATING_TIME 250
 

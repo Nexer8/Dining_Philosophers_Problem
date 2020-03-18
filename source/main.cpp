@@ -3,8 +3,6 @@
 #include "../headers/Table.h"
 #include "../headers/Philosopher.h"
 
-#define NUMBER_OF_PHILOSOPHERS 4
-
 using namespace std;
 
 void start_the_feast() {
