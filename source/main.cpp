@@ -1,11 +1,12 @@
 #include <iostream>
 #include <thread>
+#include <ncurses.h>
 #include "../headers/Table.h"
 #include "../headers/Philosopher.h"
 
 using namespace std;
 
-void start_the_feast() {
+inline void start_the_feast() {
     Table table;
     this_thread::sleep_for(chrono::seconds(1));
     cout << "The feast has started!\n";
@@ -35,7 +36,11 @@ void start_the_feast() {
 
 int main() {
 
+    initscr();
+    refresh();
+    
     start_the_feast();
 
+    endwin();
     return 0;
 }

@@ -4,6 +4,7 @@
 
 #include <iostream>
 #include <random>
+#include <ncurses.h>
 
 #include "../headers/Philosopher.h"
 
