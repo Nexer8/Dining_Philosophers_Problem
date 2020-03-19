@@ -22,6 +22,7 @@ public:
     volatile bool ready;
 
     Table();
+    ~Table();
 };
 
 

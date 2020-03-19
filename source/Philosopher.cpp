@@ -7,6 +7,7 @@
 #include <ncurses.h>
 
 #include "../headers/Philosopher.h"
+#include "../headers/Parameters.h"
 
 using namespace std;
 

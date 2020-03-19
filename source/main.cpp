@@ -3,6 +3,7 @@
 #include <ncurses.h>
 #include "../headers/Table.h"
 #include "../headers/Philosopher.h"
+#include "../headers/Parameters.h"
 
 using namespace std;
 
@@ -11,36 +12,33 @@ inline void start_the_feast() {
     this_thread::sleep_for(chrono::seconds(1));
     cout << "The feast has started!\n";
 
-    vector<Philosopher *> philosophers(NUMBER_OF_PHILOSOPHERS);
-
-    for (int i = 0; i < NUMBER_OF_PHILOSOPHERS; i++) {
-        auto aux = unique_ptr<Fork>(new Fork());
-        table.forks.emplace_back(move(aux));
-    }
+    vector< unique_ptr<Philosopher> > philosophers;
 
     for (int i = 0; i < NUMBER_OF_PHILOSOPHERS; i++) {
         if (i != NUMBER_OF_PHILOSOPHERS - 1) {
-            philosophers[i] = new Philosopher(table, *table.forks[i], *table.forks[i+1]);
+            philosophers.emplace_back(new Philosopher(table, *table.forks[i], *table.forks[i+1]));
         }
         else {
-            philosophers[i] = new Philosopher(table, *table.forks[i], *table.forks[0]);
+            philosophers.emplace_back(new Philosopher(table, *table.forks[i], *table.forks[0]));
         }
     }
 
     table.ready = true;
-    this_thread::sleep_for(chrono::seconds(5));
+    this_thread::sleep_for(chrono::seconds(FEAST_TIME));
     table.ready = false;
+
+    philosophers.clear();
 
     cout << "The feast is over and nobody is dead!\n";
 }
 
 int main() {
 
-    initscr();
-    refresh();
+//    initscr();
+//    refresh();
     
     start_the_feast();
 
-    endwin();
+//    endwin();
     return 0;
 }
