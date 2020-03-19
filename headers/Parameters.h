@@ -1,6 +1,7 @@
-//
-// Created by mwisniewski on 3/19/20.
-//
+/*!
+ *  \author    Mariusz Wiśniewski
+ *  \date      3/19/20
+ */
 
 #ifndef DINING_PHILOSOPHERS_PROBLEM_PARAMETERS_H
 #define DINING_PHILOSOPHERS_PROBLEM_PARAMETERS_H

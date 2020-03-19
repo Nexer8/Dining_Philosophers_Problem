@@ -1,9 +1,9 @@
-//
-// Created by mwisniewski on 3/18/20.
-//
-
+/*!
+ *  \author    Mariusz Wiśniewski
+ *  \date      3/18/20
+ */
 #include <iostream>
-#include <random>
+//#include <random>
 #include <ncurses.h>
 
 #include "../headers/Philosopher.h"
