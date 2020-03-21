@@ -23,9 +23,8 @@ inline void start_the_feast() {
         }
     }
 
-    table.ready = true;
     this_thread::sleep_for(chrono::seconds(FEAST_TIME));
-    table.ready = false;
+    table.no_of_ready_philosophers = 0;
 
     philosophers.clear();
 

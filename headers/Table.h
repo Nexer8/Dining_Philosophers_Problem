@@ -9,6 +9,7 @@
 
 #include <vector>
 #include <memory>
+#include <condition_variable>
 #include "Fork.h"
 
 /*! \class Table
@@ -17,12 +18,17 @@
     Table being used while dining.
 */
 class Table {
+private:
+    std::condition_variable cv;
+    std::mutex cv_m;
+
 public:
     std::vector< std::unique_ptr<Fork> > forks;
-    volatile bool ready;
+    volatile int no_of_ready_philosophers;
 
     Table();
     ~Table();
+    void wait_for_all();
 };
 
 
