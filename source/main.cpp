@@ -9,10 +9,11 @@ using namespace std;
 
 inline void start_the_feast() {
     Table table;
-    this_thread::sleep_for(chrono::seconds(1));
-    cout << "The feast has started!\n";
-
     vector< unique_ptr<Philosopher> > philosophers;
+
+    this_thread::sleep_for(chrono::seconds(1));
+
+    cout << "The feast has started!\n";
 
     for (int i = 0; i < NUMBER_OF_PHILOSOPHERS; i++) {
         if (i != NUMBER_OF_PHILOSOPHERS - 1) {
@@ -23,9 +24,8 @@ inline void start_the_feast() {
         }
     }
 
-    table.ready = true;
     this_thread::sleep_for(chrono::seconds(FEAST_TIME));
-    table.ready = false;
+    table.no_of_ready_philosophers = 0;
 
     philosophers.clear();
 

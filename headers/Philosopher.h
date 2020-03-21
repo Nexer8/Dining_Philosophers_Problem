@@ -24,14 +24,13 @@ static int current_id = 0;
 class Philosopher {
 private:
     int id;
-    Table const &table;
+    Table &table;
     Fork &left_fork;
     Fork &right_fork;
     std::thread life;
-//    std::mt19937 rng { std::random_device{}() };
 
 public:
-    Philosopher(Table const &table, Fork &rightFork, Fork &leftFork);
+    Philosopher(Table &table, Fork &rightFork, Fork &leftFork);
     ~Philosopher();
     void dine();
     void think();
