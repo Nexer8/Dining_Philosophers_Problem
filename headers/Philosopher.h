@@ -15,6 +15,12 @@
 #include "Table.h"
 
 static int current_id = 0;
+enum class State {
+    SLEEPING,
+    THINKING,
+    EATING,
+    WAITING_FOR_FORKS
+};
 
 /*! \class Philosopher
     \brief A class that simulates philosopher.
@@ -24,6 +30,7 @@ static int current_id = 0;
 class Philosopher {
 private:
     int id;
+    State state;
     Table &table;
     Fork &left_fork;
     Fork &right_fork;
@@ -35,6 +42,8 @@ public:
     void dine();
     void think();
     void eat();
+    int get_id() { return id; }
+    State get_state() { return state; }
 };
 
 
