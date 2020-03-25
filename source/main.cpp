@@ -12,7 +12,7 @@ inline void start_the_feast() {
     Table table;
     vector< shared_ptr<Philosopher> > philosophers;
 
-    this_thread::sleep_for(chrono::seconds(1));
+    this_thread::sleep_for(chrono::seconds(4));
 
 //    cout << "The feast has started!\n";
 

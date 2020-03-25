@@ -30,7 +30,7 @@ enum class State {
 class Philosopher {
 private:
     int id;
-    State state;
+    volatile State state;
     Table &table;
     Fork &left_fork;
     Fork &right_fork;

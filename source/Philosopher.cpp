@@ -26,6 +26,9 @@ void Philosopher::eat() {
 
     state = State::WAITING_FOR_FORKS;
 
+    chrono::milliseconds wait(EATING_TIME * 2);
+    this_thread::sleep_for(wait);
+
     lock(left_fork.mutex, right_fork.mutex);    // ensures there are no deadlocks
     lock_guard<mutex> left_lock(left_fork.mutex, adopt_lock);
     lock_guard<mutex> right_lock(right_fork.mutex, adopt_lock);

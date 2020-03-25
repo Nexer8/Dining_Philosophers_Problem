@@ -57,39 +57,41 @@ void Visualizer::update_screen() {
     init_pair(3, COLOR_YELLOW, -1);
     init_pair(4, COLOR_CYAN, -1);
 
-//    for (int i = 0; i < NUMBER_OF_PHILOSOPHERS; i++) {
-//        sprintf(buf, "%d", philosophers[i]->get_id());
-//        p = buf;
-//        mvwprintw(window, 2 * i + 5, 3, "%s", p);
-//
-//        switch(philosophers[i]->get_state()) {
-//            case State::EATING:
-//                wattron(window, COLOR_PAIR(1));
-//                mvwprintw(window, 2 * i + 5, column_width + 1, "eating  ");
-//                wattroff(window, COLOR_PAIR(1));
-//                break;
-//
-//            case State::THINKING:
-//                wattron(window, COLOR_PAIR(2));
-//                mvwprintw(window, 2 * i + 5, column_width + 1, "thinking");
-//                wattroff(window, COLOR_PAIR(2));
-//                break;
-//
-//            case State::WAITING_FOR_FORKS:
-//                wattron(window, COLOR_PAIR(3));
-//                mvwprintw(window, 2 * i + 5, column_width + 1, "waiting ");
-//                wattroff(window, COLOR_PAIR(3));
-//                break;
-//
-//            default:
-//                wattron(window, COLOR_PAIR(4));
-//                mvwprintw(window, 2 * i + 5, column_width + 1, "sleeping");
-//                wattroff(window, COLOR_PAIR(4));
-//                break;
-//        }
-//    }
-//    touchwin(window);
-//    wrefresh(window);
+    for (int i = 0; i < NUMBER_OF_PHILOSOPHERS; i++) {
+        sprintf(buf, "%d", philosophers[i]->get_id());
+        p = buf;
+        mvwprintw(window, 2 * i + 5, 3, "%s", p);
+
+        switch(philosophers[i]->get_state()) {
+            case State::EATING:
+                wattron(window, COLOR_PAIR(1));
+                mvwprintw(window, 2 * i + 5, column_width + 1, "eating  ");
+                wattroff(window, COLOR_PAIR(1));
+                break;
+
+            case State::THINKING:
+                wattron(window, COLOR_PAIR(2));
+                mvwprintw(window, 2 * i + 5, column_width + 1, "thinking");
+                wattroff(window, COLOR_PAIR(2));
+                break;
+
+            case State::WAITING_FOR_FORKS:
+                wattron(window, COLOR_PAIR(3));
+                mvwprintw(window, 2 * i + 5, column_width + 1, "waiting ");
+                wattroff(window, COLOR_PAIR(3));
+                break;
+
+            default:
+                wattron(window, COLOR_PAIR(4));
+                mvwprintw(window, 2 * i + 5, column_width + 1, "sleeping");
+                wattroff(window, COLOR_PAIR(4));
+                break;
+        }
+    }
+    touchwin(window);
+    wrefresh(window);
+
+    refresh();
 }
 
 

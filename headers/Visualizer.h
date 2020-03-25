@@ -14,7 +14,7 @@ class Visualizer {
 private:
     std::thread thread;
     WINDOW *window;
-    std::vector<std::shared_ptr<Philosopher>> philosophers;
+    std::vector<std::shared_ptr<Philosopher>> &philosophers;
     Table &table;
 
     struct Params {
