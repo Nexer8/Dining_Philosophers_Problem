@@ -1,6 +1,7 @@
-//
-// Created by mwisniewski on 3/25/20.
-//
+/*!
+ *  \author    Mariusz Wiśniewski
+ *  \date      3/25/20
+ */
 
 #ifndef DINING_PHILOSOPHERS_PROBLEM_VISUALIZER_H
 #define DINING_PHILOSOPHERS_PROBLEM_VISUALIZER_H
@@ -10,6 +11,12 @@
 #include <ncurses.h>
 #include "Philosopher.h"
 
+
+/*! \class Visualizer
+    \brief A class that is responsible for the visual part happening on the screen.
+
+    Visualizer that runs ncurses.
+*/
 class Visualizer {
 private:
     std::thread thread;
@@ -17,13 +24,13 @@ private:
     std::vector<std::shared_ptr<Philosopher>> &philosophers;
     Table &table;
 
-    struct Params {
+    struct Window_params {
         int x_max;
         int y_max;
         int x_margin;
         int y_margin;
         int separator;
-    } window_params;
+    } params;
 
     void init();
 

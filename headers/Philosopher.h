@@ -9,7 +9,6 @@
 
 #include <string>
 #include <thread>
-#include <random>
 
 #include "Fork.h"
 #include "Table.h"
@@ -38,11 +37,17 @@ private:
 
 public:
     Philosopher(Table &table, Fork &rightFork, Fork &leftFork);
+
     ~Philosopher();
+
     void dine();
+
     void think();
+
     void eat();
+
     int get_id() { return id; }
+
     State get_state() { return state; }
 };
 

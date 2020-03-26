@@ -23,11 +23,13 @@ private:
     std::mutex cv_m;
 
 public:
-    std::vector< std::unique_ptr<Fork> > forks;
+    std::vector<std::unique_ptr<Fork> > forks;
     volatile int no_of_ready_philosophers;
 
     Table();
+
     ~Table();
+
     void wait_for_all();
 };
 

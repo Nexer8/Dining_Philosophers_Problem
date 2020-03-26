@@ -1,6 +1,7 @@
-//
-// Created by mwisniewski on 3/25/20.
-//
+/*!
+ *  \author    Mariusz Wiśniewski
+ *  \date      3/25/20
+ */
 
 #include <unistd.h>
 #include "../headers/Visualizer.h"
@@ -8,31 +9,31 @@
 
 void Visualizer::init() {
     initscr();
-    noecho();
-    box(stdscr, 0, 0);
+    noecho(); // no user input is being shown on the screen
     use_default_colors();
     start_color();
+    box(stdscr, 0, 0);
 
-    getmaxyx(stdscr, window_params.y_max, window_params.x_max);
-    window_params.x_margin = 0.05 * (float) window_params.x_max;
-    window_params.y_margin = 0.1 * (float) window_params.y_max;
-    window_params.separator = (float) (window_params.x_max) * 0.55;
+    getmaxyx(stdscr, params.y_max, params.x_max);
+    params.x_margin = params.x_max / 20;
+    params.y_margin = params.y_max / 10;
+    params.separator = params.x_max / 2;
 
-    int column_width = (float) (window_params.separator - window_params.x_margin) / 2;
+    int column_width = (params.separator - params.x_margin) / 2;
     init_pair(9, COLOR_WHITE, -1);
 
     wattron(stdscr, COLOR_PAIR(9));
 
-    mvwprintw(stdscr, window_params.y_margin / 2, window_params.x_max / 2 - 16, "THE DINING PHILOSOPHERS");
-    mvwprintw(stdscr, window_params.y_max - window_params.y_margin / 2,
-              window_params.x_max - window_params.x_margin - 22, "Mariusz Wisniewski 241393");
+    mvwprintw(stdscr, params.y_margin / 2, params.x_max / 2 - 11, "THE DINING PHILOSOPHERS");
+    mvwprintw(stdscr, params.y_max - params.y_margin / 2,
+              params.x_max - params.x_margin - 22, "Mariusz Wisniewski 241393");
 
     wattroff(stdscr, COLOR_PAIR(9));
 
     refresh();
 
-    window = derwin(stdscr, window_params.y_max - 2 * window_params.y_margin,
-                    window_params.separator - window_params.x_margin, window_params.y_margin, window_params.x_margin);
+    window = derwin(stdscr, params.y_max - 2 * params.y_margin,
+                    params.separator - params.x_margin, params.y_margin, params.x_margin);
     box(window, 0, 0);
 
     wprintw(window, "Philosophers");
@@ -40,29 +41,27 @@ void Visualizer::init() {
     mvwprintw(window, 2, 2, "Id");
     mvwprintw(window, 2, column_width, "State");
 
-    mvwhline(window, 4, 1, 0, window_params.separator - window_params.x_margin - 2);
-    mvwvline(window, 1, column_width - 2, 0, window_params.y_max - 2 * window_params.y_margin - 2);
+    mvwhline(window, 4, 1, 0, params.separator - params.x_margin - 2);
+    mvwvline(window, 1, column_width - 2, 0, params.y_max - 2 * params.y_margin - 2);
+
+    for (int i = 0; i < NUMBER_OF_PHILOSOPHERS; i++) {
+        mvwprintw(window, 2 * i + 5, 3, "%s", std::to_string(philosophers[i]->get_id()).c_str());
+    }
 
     touchwin(window);
-
     wrefresh(window);
 }
 
 void Visualizer::update_screen() {
-    int column_width = (float) (window_params.separator - window_params.x_margin) / 2;
-    char buf[2];
-    const char *p;
+    int column_width = (params.separator - params.x_margin) / 2;
+
     init_pair(1, COLOR_GREEN, -1);
     init_pair(2, COLOR_BLUE, -1);
     init_pair(3, COLOR_YELLOW, -1);
     init_pair(4, COLOR_CYAN, -1);
 
     for (int i = 0; i < NUMBER_OF_PHILOSOPHERS; i++) {
-        sprintf(buf, "%d", philosophers[i]->get_id());
-        p = buf;
-        mvwprintw(window, 2 * i + 5, 3, "%s", p);
-
-        switch(philosophers[i]->get_state()) {
+        switch (philosophers[i]->get_state()) {
             case State::EATING:
                 wattron(window, COLOR_PAIR(1));
                 mvwprintw(window, 2 * i + 5, column_width + 1, "eating  ");
@@ -90,8 +89,6 @@ void Visualizer::update_screen() {
     }
     touchwin(window);
     wrefresh(window);
-
-    refresh();
 }
 
 
@@ -110,6 +107,8 @@ Visualizer::~Visualizer() {
 }
 
 Visualizer::Visualizer(std::vector<std::shared_ptr<Philosopher> > &philosophers, Table &table) : philosophers(
-        philosophers), table(table), thread(&Visualizer::update, this) {
+        philosophers), table(table) {
     init();
+    while (!table.no_of_ready_philosophers);
+    thread = std::thread(&Visualizer::update, this);
 }
